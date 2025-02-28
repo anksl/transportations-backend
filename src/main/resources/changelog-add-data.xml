@@ -1,0 +1,65 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="countries_data" author="Hanna">
+        <loadData tableName="countries" file="data/countries_202308152217.csv"/>
+    </changeSet>
+
+    <changeSet id="cities_data" author="Hanna">
+        <loadData tableName="cities" file="data/cities_202308152216.csv"/>
+    </changeSet>
+
+    <changeSet id="addresses_data" author="Hanna">
+        <loadData tableName="addresses" file="data/addresses_202308152216.csv"/>
+    </changeSet>
+
+    <changeSet id="deliveries_data" author="Hanna">
+        <sqlFile path="data/deliveries_202502282119.sql" dbms="postgresql"/>
+    </changeSet>
+
+    <changeSet id="users_data" author="Hanna">
+        <loadData tableName="users" file="data/users_202308152218.csv"/>
+    </changeSet>
+
+    <changeSet id="payments_data" author="Hanna">
+        <sqlFile path="data/payments_202502282125.sql" dbms="postgresql"/>
+    </changeSet>
+
+    <changeSet id="roles_data" author="Hanna">
+        <sqlFile path="data/roles_202502282126.sql" dbms="postgresql"/>
+    </changeSet>
+
+    <changeSet id="sizes_data" author="Hanna">
+        <loadData tableName="sizes" file="data/sizes_202308152217.csv"/>
+    </changeSet>
+
+    <changeSet id="cargos_data" author="Hanna">
+        <sqlFile path="data/cargos_202502282128.sql" dbms="postgresql"/>
+    </changeSet>
+
+    <changeSet id="transportations_data" author="Hanna">
+        <loadData tableName="transportations" file="data/transportations_202308152217.csv"/>
+    </changeSet>
+
+    <changeSet id="users_roles_data" author="Hanna">
+        <loadData tableName="users_roles" file="data/users_roles_202308152218.csv"/>
+    </changeSet>
+
+    <changeSet id="update_sequences" author="Hanna">
+        <sql>
+            ALTER SEQUENCE public.addresses_id_seq RESTART WITH 40;
+            ALTER SEQUENCE public.cities_id_seq RESTART WITH 11;
+            ALTER SEQUENCE public.countries_id_seq RESTART WITH 4;
+            ALTER SEQUENCE public.cargos_id_seq RESTART WITH 16;
+            ALTER SEQUENCE public.deliveries_id_seq RESTART WITH 34;
+            ALTER SEQUENCE public.payments_id_seq RESTART WITH 12;
+            ALTER SEQUENCE public.roles_id_seq RESTART WITH 4;
+            ALTER SEQUENCE public.sizes_id_seq RESTART WITH 16;
+            ALTER SEQUENCE public.transportations_id_seq RESTART WITH 12;
+            ALTER SEQUENCE public.users_id_seq RESTART WITH 24;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
