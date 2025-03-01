@@ -14,7 +14,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistrationDto {
+public class RegistrationUserDto {
 
     @NotBlank
     private String name;

@@ -1,6 +1,6 @@
 package com.transport.service.impl;
 
-import com.transport.api.dto.RegistrationDto;
+import com.transport.api.dto.RegistrationUserDto;
 import com.transport.api.dto.UserDto;
 import com.transport.api.exception.NoSuchEntityException;
 import com.transport.api.exception.UniqueEntityException;
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void createUser(RegistrationDto user) {
+    public void createUser(RegistrationUserDto user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(userMapper.convert(user));
     }

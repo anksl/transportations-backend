@@ -1,6 +1,6 @@
 package com.transport.api.mapper;
 
-import com.transport.api.dto.RegistrationDto;
+import com.transport.api.dto.RegistrationUserDto;
 import com.transport.api.dto.UserDto;
 import com.transport.model.User;
 import org.mapstruct.Mapper;
@@ -12,7 +12,7 @@ public interface UserMapper {
     User convert(UserDto userDto);
 
     @Mapping(target = "enabled", constant = "true")
-    User convert(RegistrationDto userDto);
+    User convert(RegistrationUserDto userDto);
 
     @Mapping(target = "payments", ignore = true)
     UserDto convert(User user);

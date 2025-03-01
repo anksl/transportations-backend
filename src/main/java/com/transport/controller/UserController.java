@@ -1,6 +1,6 @@
 package com.transport.controller;
 
-import com.transport.api.dto.RegistrationDto;
+import com.transport.api.dto.RegistrationUserDto;
 import com.transport.api.dto.UserDto;
 import com.transport.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public void signUp(@Validated @RequestBody RegistrationDto user) {
+    public void signUp(@Validated @RequestBody RegistrationUserDto user) {
         userService.createUser(user);
     }
 
