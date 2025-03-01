@@ -21,7 +21,6 @@ services:
       - SPRING_DATA_MONGODB_DATABASE=admin
       - SPRING_DATA_MONGODB_USERNAME=root
       - SPRING_DATA_MONGODB_PASSWORD=12345678
-    restart: always
     networks:
       - transport-network
 
@@ -36,7 +35,6 @@ services:
       - "54320:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
-    restart: always
     networks:
       - transport-network
 
@@ -50,7 +48,6 @@ services:
       - "27017:27017"
     volumes:
       - mongodb-data:/var/lib/mongodb/data
-    restart: always
     networks:
       - transport-network
 
