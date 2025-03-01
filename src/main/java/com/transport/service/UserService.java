@@ -1,5 +1,6 @@
 package com.transport.service;
 
+import com.transport.api.dto.RegistrationDto;
 import com.transport.api.dto.UserDto;
 
 public interface UserService {
@@ -10,7 +11,7 @@ public interface UserService {
 
     UserDto getCurrentUser();
 
-    void createUser(UserDto user);
+    void createUser(RegistrationDto user);
 
     UserDto updateUser(Long id, UserDto newUser);
 

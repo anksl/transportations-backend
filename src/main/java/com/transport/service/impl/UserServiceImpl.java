@@ -1,5 +1,6 @@
 package com.transport.service.impl;
 
+import com.transport.api.dto.RegistrationDto;
 import com.transport.api.dto.UserDto;
 import com.transport.api.exception.NoSuchEntityException;
 import com.transport.api.exception.UniqueEntityException;
@@ -8,13 +9,12 @@ import com.transport.model.Payment;
 import com.transport.model.User;
 import com.transport.repository.UserRepository;
 import com.transport.service.UserService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto findByName(String name) {
         List<User> users = userRepository.findByName(name);
-        if (users.size() == 0)
+        if (users.isEmpty())
             throw new NoSuchEntityException(String.format("User with name: %s doesn't exist", name));
         else if (users.size() > 1)
             throw new UniqueEntityException(String.format("More than one user with name: %s", name));
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void createUser(UserDto user) {
+    public void createUser(RegistrationDto user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(userMapper.convert(user));
     }

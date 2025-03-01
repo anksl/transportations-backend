@@ -12,6 +12,5 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleDto {
-    private Long id;
     private String role;
 }
