@@ -23,6 +23,5 @@ public class RegistrationDto {
     @NotBlank
     @Email(regexp = ".+[@].+[\\.].+")
     private String email;
-    @NotBlank
     private Set<RoleDto> roles;
 }
