@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login", "/home", "/api/users/register")
+                .antMatchers("/login", "/home")
                 .permitAll()
                 .antMatchers(HttpMethod.POST, "/api/transportations/**", "/api/addresses/**", "/api/deliveries/**", "/api/payments/**").hasRole("FORWARDER")
                 .antMatchers(HttpMethod.PUT, "/api/transportations/**", "/api/addresses/**", "/api/deliveries/**", "/api/payments/**").hasRole("FORWARDER")
