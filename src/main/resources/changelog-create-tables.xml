@@ -211,7 +211,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="rating" type="SMALLINT"/>
-            <column defaultValueNumeric="1" name="enabled" type="TINYINT(3)">
+            <column defaultValueBoolean="true" name="enabled" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>
         </createTable>
