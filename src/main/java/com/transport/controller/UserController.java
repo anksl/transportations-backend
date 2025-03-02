@@ -5,6 +5,7 @@ import com.transport.api.dto.UserDto;
 import com.transport.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +34,7 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(id));
     }
 
-    @GetMapping
+    @GetMapping("/find")
     public ResponseEntity<UserDto> findByName(@RequestParam(value = "name") String name) {
         return ResponseEntity.ok(userService.findByName(name));
     }

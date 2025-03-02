@@ -34,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .cors().disable()
                 .csrf().disable()
                 .exceptionHandling()
                 .accessDeniedHandler(customAccessDeniedHandler)
@@ -44,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/login", "/home")
                 .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/users/find").hasAnyRole("FORWARDER", "CUSTOMER", "ADMIN", "TRANSPORTER")
                 .antMatchers(HttpMethod.POST, "/api/transportations/**", "/api/addresses/**", "/api/deliveries/**", "/api/payments/**").hasRole("FORWARDER")
                 .antMatchers(HttpMethod.PUT, "/api/transportations/**", "/api/addresses/**", "/api/deliveries/**", "/api/payments/**").hasRole("FORWARDER")
                 .antMatchers(HttpMethod.DELETE, "/api/transportations/**", "/api/addresses/**", "/api/deliveries/**", "/api/payments/**").hasRole("FORWARDER")
