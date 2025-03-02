@@ -81,13 +81,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("*")); // Разрешаем запросы со всех источников
+        configuration.setAllowedOriginPatterns(List.of("*")); // Используем allowedOriginPatterns вместо allowedOrigins
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Разрешаем все методы
         configuration.setAllowedHeaders(List.of("*")); // Разрешаем все заголовки
-        configuration.setAllowCredentials(true); // Разрешаем куки (если необходимо)
+        configuration.setAllowCredentials(true); // Разрешаем куки и аутентификацию
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Применяем CORS для всех путей
+        source.registerCorsConfiguration("/**", configuration); // Применяем ко всем путям
         return source;
     }
 }
