@@ -1,5 +1,6 @@
 package com.transport.security.config;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import static com.transport.security.utils.SecurityConstants.TRANSPORTER_ENDPOINTS;
 
@@ -34,33 +38,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .cors().disable()
-                .csrf().disable()
-                .exceptionHandling()
-                .accessDeniedHandler(customAccessDeniedHandler)
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/login", "/home")
-                .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/users/find").hasAnyRole("FORWARDER", "CUSTOMER", "ADMIN", "TRANSPORTER")
-                .antMatchers(HttpMethod.POST, "/api/transportations/**", "/api/addresses/**", "/api/deliveries/**", "/api/payments/**").hasRole("FORWARDER")
-                .antMatchers(HttpMethod.PUT, "/api/transportations/**", "/api/addresses/**", "/api/deliveries/**", "/api/payments/**").hasRole("FORWARDER")
-                .antMatchers(HttpMethod.DELETE, "/api/transportations/**", "/api/addresses/**", "/api/deliveries/**", "/api/payments/**").hasRole("FORWARDER")
-                .antMatchers(HttpMethod.POST, "/api/cargos/**").hasRole("CUSTOMER")
-                .antMatchers(HttpMethod.PUT, "/api/cargos/**").hasRole("CUSTOMER")
-                .antMatchers(HttpMethod.DELETE, "/api/cargos/**").hasRole("CUSTOMER")
-                .antMatchers(HttpMethod.GET, "/api/cargos/**", "/api/payments/current").hasRole("CUSTOMER")
-                .antMatchers(HttpMethod.GET, TRANSPORTER_ENDPOINTS).hasRole("TRANSPORTER")
-                .antMatchers(HttpMethod.POST, "/api/emails/sendReport").hasRole("TRANSPORTER")
-                .antMatchers("/api/users/**", "/api/emails/sendCustomerReminder").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/**").hasRole("FORWARDER")
-                .antMatchers(HttpMethod.POST, "/api/emails/send", "/api/emails/sendWithAttachment").hasAnyRole("FORWARDER", "CUSTOMER", "ADMIN", "TRANSPORTER");
+            .cors().configurationSource(corsConfigurationSource()) // Включаем CORS
+            .and()
+            .csrf().disable()
+            .exceptionHandling()
+            .accessDeniedHandler(customAccessDeniedHandler)
+            .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .authorizeRequests()
+            .antMatchers("/login", "/home")
+            .permitAll()
+            .antMatchers(HttpMethod.GET, "/api/users/find").hasAnyRole("FORWARDER", "CUSTOMER", "ADMIN", "TRANSPORTER")
+            .antMatchers(HttpMethod.POST, "/api/transportations/**", "/api/addresses/**", "/api/deliveries/**", "/api/payments/**").hasRole("FORWARDER")
+            .antMatchers(HttpMethod.PUT, "/api/transportations/**", "/api/addresses/**", "/api/deliveries/**", "/api/payments/**").hasRole("FORWARDER")
+            .antMatchers(HttpMethod.DELETE, "/api/transportations/**", "/api/addresses/**", "/api/deliveries/**", "/api/payments/**").hasRole("FORWARDER")
+            .antMatchers(HttpMethod.POST, "/api/cargos/**").hasRole("CUSTOMER")
+            .antMatchers(HttpMethod.PUT, "/api/cargos/**").hasRole("CUSTOMER")
+            .antMatchers(HttpMethod.DELETE, "/api/cargos/**").hasRole("CUSTOMER")
+            .antMatchers(HttpMethod.GET, "/api/cargos/**", "/api/payments/current").hasRole("CUSTOMER")
+            .antMatchers(HttpMethod.GET, TRANSPORTER_ENDPOINTS).hasRole("TRANSPORTER")
+            .antMatchers(HttpMethod.POST, "/api/emails/sendReport").hasRole("TRANSPORTER")
+            .antMatchers("/api/users/**", "/api/emails/sendCustomerReminder").hasRole("ADMIN")
+            .antMatchers(HttpMethod.GET, "/api/**").hasRole("FORWARDER")
+            .antMatchers(HttpMethod.POST, "/api/emails/send", "/api/emails/sendWithAttachment").hasAnyRole("FORWARDER", "CUSTOMER", "ADMIN", "TRANSPORTER");
 
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
     }
 
     @Bean
@@ -72,5 +76,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("*")); // Разрешаем запросы со всех источников
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Разрешаем все методы
+        configuration.setAllowedHeaders(List.of("*")); // Разрешаем все заголовки
+        configuration.setAllowCredentials(true); // Разрешаем куки (если необходимо)
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration); // Применяем CORS для всех путей
+        return source;
     }
 }
