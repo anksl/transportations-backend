@@ -1,5 +1,6 @@
 package com.transport.model;
 
+import javax.persistence.CascadeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

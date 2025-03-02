@@ -20,5 +20,6 @@ public class AddressDto {
     private Integer house;
     private Integer apartment;
     private String phoneNumber;
-    private CityDto city;
+    private String cityName;
+    private String countryName;
 }

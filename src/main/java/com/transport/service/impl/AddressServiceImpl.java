@@ -4,6 +4,8 @@ import com.transport.api.dto.AddressDto;
 import com.transport.api.exception.NoSuchEntityException;
 import com.transport.api.mapper.AddressMapper;
 import com.transport.model.Address;
+import com.transport.model.City;
+import com.transport.model.Country;
 import com.transport.repository.AddressRepository;
 import com.transport.repository.CityRepository;
 import com.transport.repository.CountryRepository;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -67,7 +70,7 @@ public class AddressServiceImpl implements AddressService {
                 .orElseThrow(() -> new NoSuchEntityException(String.format("Address with id: %s doesn't exist", id))));
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     @Override
     public void createAddress(AddressDto addressDto) {
         Address address = addressMapper.convert(addressDto);
@@ -75,7 +78,7 @@ public class AddressServiceImpl implements AddressService {
         addressRepository.save(address);
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     @Override
     public AddressDto updateAddress(Long id, AddressDto newAddressDto) {
         Address address = addressRepository.findById(id)
@@ -85,18 +88,28 @@ public class AddressServiceImpl implements AddressService {
         address.setHouse(newAddress.getHouse());
         address.setStreet(newAddress.getStreet());
         address.setPhoneNumber(newAddress.getPhoneNumber());
-        checkCityAndCountryForExistence(address);
         address.setCity(newAddress.getCity());
+        checkCityAndCountryForExistence(address);
         return addressMapper.convert(addressRepository.save(address));
     }
 
     private void checkCityAndCountryForExistence(Address address) {
-        if (countryRepository.existsCountryByName(address.getCity().getCountry().getName()) && !cityRepository.existsCityByName(address.getCity().getName())) {
-            cityRepository.save(address.getCity());
-        } else if (!countryRepository.existsCountryByName(address.getCity().getCountry().getName())) {
-            countryRepository.save(address.getCity().getCountry());
-            cityRepository.save(address.getCity());
-        }
+        var countryName = address.getCity().getCountry().getName();
+        var cityName = address.getCity().getName();
+
+        var country = countryRepository.findByName(countryName)
+            .orElseGet(() -> {
+                var newCountry = Country.builder().name(countryName).build();
+                return countryRepository.save(newCountry);
+            });
+
+        var city = cityRepository.findByName(cityName)
+            .orElseGet(() -> {
+                var newCity = City.builder().name(cityName).country(country).build();
+                return cityRepository.save(newCity);
+            });
+
+        address.setCity(city);
     }
 
     @Transactional
