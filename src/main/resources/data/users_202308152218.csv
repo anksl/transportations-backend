@@ -1,11 +1,11 @@
-"id","name","password","email","rating","enabled"
-1,Ann,$2a$12$mk5OJRxQnhvNfwsGd9FCyuIa1ESdQxBVVsoRgnWNHjqtR1EXCU1hO,annakisel524013@gmail.com,0,1
-2,Aldi,$2a$10$7eFE.228A/2td9K5RFaUBu0plC0txWjTblJBAaE5BYsiQ.CWGj4Zy,annakisel524013@gmail.com,0,1
-3,Bob,$2a$10$OoLaLngiMBLE1R5gMHBIEuC7TT2DDe/3ddF2gVMaRlPISqkPiRuP6,annakisel524013@gmail.com,0,1
-4,John,$2a$10$fNDRmRUFstlZzeFVScR.Z.OZHm0A8APIEfldcS.aCvPTE.iwR70Om,annakisel524013@gmail.com,-40,1
-7,ALKLA,$2a$10$6HugrSGjv2IT/DvrCfuaA.aDnXSU7H2xF1i3hNntezthI2pse0L06,annakisel524013@gmail.com,0,1
-9,Artykuliw,$2a$10$PQ0aSZD/5keCKLxzqbB.d.gln3ODrn8BBd4ROiJD5Xca7LSl3jDIu,annakisel524013@gmail.com,60,1
-10,Zipmend,$2a$10$DeYUR0MVgiGsfHRTnXUrleWND8pLO1fT1u/fCh4.ZIDfN.w15VPO6,annakisel524013@gmail.com,20,1
-12,WOLspedtrans,$2a$10$uEKYmX1E5Vm3DolokgQTp.szqVzFTQ4gSa5vaj8M4GQfOut6aPMIm,annakisel524013@gmail.com,0,1
-16,Vitalij,$2a$10$RgAdzFkkuKs0yin3ihjBSeoCTyHQhi3.9kQPr.xAHnAmb.Q/oP9j6,annakisel524013@gmail.com,0,1
-17,Krzystof,$2a$10$wSHKmkrAjZ.z9I5rQYis0OJRc7xswxYuYJnSNY2PFtd9bUi/qbILi,annakisel524013@gmail.com,0,1
+"id","name","password","email","rating","enabled","first_name","last_name","phone_number","about"
+1,"Ann","$2a$12$mk5OJRxQnhvNfwsGd9FCyuIa1ESdQxBVVsoRgnWNHjqtR1EXCU1hO","annakisel524013@gmail.com",0,1,"Ann","Kisel","+123456789","User Ann description"
+2,"Aldi","$2a$10$7eFE.228A/2td9K5RFaUBu0plC0txWjTblJBAaE5BYsiQ.CWGj4Zy","annakisel524013@gmail.com",0,1,"Aldi","Smith","+987654321","User Aldi description"
+3,"Bob","$2a$10$OoLaLngiMBLE1R5gMHBIEuC7TT2DDe/3ddF2gVMaRlPISqkPiRuP6","annakisel524013@gmail.com",0,1,"Bob","Brown","+1122334455","User Bob description"
+4,"John","$2a$10$fNDRmRUFstlZzeFVScR.Z.OZHm0A8APIEfldcS.aCvPTE.iwR70Om","annakisel524013@gmail.com",-40,1,"John","Doe","+5566778899","User John description"
+7,"ALKLA","$2a$10$6HugrSGjv2IT/DvrCfuaA.aDnXSU7H2xF1i3hNntezthI2pse0L06","annakisel524013@gmail.com",0,1,"ALKLA","Johnson","+9988776655","User ALKLA description"
+9,"Artykuliw","$2a$10$PQ0aSZD/5keCKLxzqbB.d.gln3ODrn8BBd4ROiJD5Xca7LSl3jDIu","annakisel524013@gmail.com",60,1,"Artykuliw","Nowak","+4433221100","User Artykuliw description"
+10,"Zipmend","$2a$10$DeYUR0MVgiGsfHRTnXUrleWND8pLO1fT1u/fCh4.ZIDfN.w15VPO6","annakisel524013@gmail.com",20,1,"Zipmend","Kowalski","+6655443322","User Zipmend description"
+12,"WOLspedtrans","$2a$10$uEKYmX1E5Vm3DolokgQTp.szqVzFTQ4gSa5vaj8M4GQfOut6aPMIm","annakisel524013@gmail.com",0,1,"WOLspedtrans","Smith","+777888999","User WOLspedtrans description"
+16,"Vitalij","$2a$10$RgAdzFkkuKs0yin3ihjBSeoCTyHQhi3.9kQPr.xAHnAmb.Q/oP9j6","annakisel524013@gmail.com",0,1,"Vitalij","Petrov","+111222333","User Vitalij description"
+17,"Krzystof","$2a$10$wSHKmkrAjZ.z9I5rQYis0OJRc7xswxYuYJnSNY2PFtd9bUi/qbILi","annakisel524013@gmail.com",0,1,"Krzystof","Lewandowski","+222333444","User Krzystof description"

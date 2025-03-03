@@ -1,6 +1,6 @@
 package com.transport.service;
 
-import com.transport.api.dto.UserDto;
+import com.transport.api.dto.user.UserDto;
 import com.transport.api.exception.NoSuchEntityException;
 import com.transport.api.exception.UniqueEntityException;
 import com.transport.api.mapper.UserMapper;

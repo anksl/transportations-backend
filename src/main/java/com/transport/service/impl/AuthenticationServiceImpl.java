@@ -1,6 +1,6 @@
 package com.transport.service.impl;
 
-import com.transport.api.dto.AuthenticationDto;
+import com.transport.api.dto.user.AuthenticationDto;
 import com.transport.security.config.JwtTokenService;
 import com.transport.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;

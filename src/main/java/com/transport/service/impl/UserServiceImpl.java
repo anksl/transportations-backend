@@ -1,7 +1,8 @@
 package com.transport.service.impl;
 
-import com.transport.api.dto.RegistrationUserDto;
-import com.transport.api.dto.UserDto;
+import com.transport.api.dto.user.RegistrationUserDto;
+import com.transport.api.dto.user.UpdateUserDto;
+import com.transport.api.dto.user.UserDto;
 import com.transport.api.exception.NoSuchEntityException;
 import com.transport.api.exception.UniqueEntityException;
 import com.transport.api.mapper.UserMapper;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
+
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
@@ -27,16 +29,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto findById(Long id) {
         return userMapper.convert(userRepository.findById(id)
-                .orElseThrow(() -> new NoSuchEntityException(String.format("User with id: %s doesn't exist", id))));
+            .orElseThrow(() -> new NoSuchEntityException(
+                String.format("User with id: %s doesn't exist", id))));
     }
 
     @Override
     public UserDto findByName(String name) {
         List<User> users = userRepository.findByName(name);
-        if (users.isEmpty())
-            throw new NoSuchEntityException(String.format("User with name: %s doesn't exist", name));
-        else if (users.size() > 1)
-            throw new UniqueEntityException(String.format("More than one user with name: %s", name));
+        if (users.isEmpty()) {
+            throw new NoSuchEntityException(
+                String.format("User with name: %s doesn't exist", name));
+        } else if (users.size() > 1) {
+            throw new UniqueEntityException(
+                String.format("More than one user with name: %s", name));
+        }
         return userMapper.convert(users.get(0));
     }
 
@@ -54,17 +60,13 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserDto updateUser(Long id, UserDto newUserDto) {
+    public UpdateUserDto updateUser(Long id, UpdateUserDto newUserDto) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new NoSuchEntityException(String.format("User with id: %s doesn't exist", id)));
-        User newUser = userMapper.convert(newUserDto);
-        user.setName(newUser.getName());
-        user.setPassword(passwordEncoder.encode(newUser.getPassword()));
-        user.setEmail(newUser.getEmail());
+            .orElseThrow(() -> new NoSuchEntityException(
+                String.format("User with id: %s doesn't exist", id)));
         setRating(user);
-        user.setEnabled(newUser.getEnabled());
-        user.setRoles(newUser.getRoles());
-        return userMapper.convert(userRepository.save(user));
+        userMapper.toUser(user, newUserDto);
+        return userMapper.toUpdateUserDto(user);
     }
 
     private void setRating(User user) {

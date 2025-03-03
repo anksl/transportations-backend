@@ -1,11 +1,11 @@
 package com.transport.controller;
 
-import com.transport.api.dto.RegistrationUserDto;
-import com.transport.api.dto.UserDto;
+import com.transport.api.dto.user.RegistrationUserDto;
+import com.transport.api.dto.user.UpdateUserDto;
+import com.transport.api.dto.user.UserDto;
 import com.transport.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable(value = "id") Long id, @Validated @RequestBody UserDto newUser) {
+    public ResponseEntity<UpdateUserDto> updateUser(@PathVariable(value = "id") Long id, @Validated @RequestBody UpdateUserDto newUser) {
         return ResponseEntity.ok(userService.updateUser(id, newUser));
     }
 

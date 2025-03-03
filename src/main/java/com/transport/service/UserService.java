@@ -1,7 +1,8 @@
 package com.transport.service;
 
-import com.transport.api.dto.RegistrationUserDto;
-import com.transport.api.dto.UserDto;
+import com.transport.api.dto.user.RegistrationUserDto;
+import com.transport.api.dto.user.UpdateUserDto;
+import com.transport.api.dto.user.UserDto;
 
 public interface UserService {
 
@@ -13,7 +14,7 @@ public interface UserService {
 
     void createUser(RegistrationUserDto user);
 
-    UserDto updateUser(Long id, UserDto newUser);
+    UpdateUserDto updateUser(Long id, UpdateUserDto newUser);
 
     void deleteUser(Long id);
 }

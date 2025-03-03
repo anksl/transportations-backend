@@ -1,7 +1,7 @@
 package com.transport.service.impl;
 
 import com.transport.api.dto.PaymentDto;
-import com.transport.api.dto.UserDto;
+import com.transport.api.dto.user.UserDto;
 import com.transport.api.exception.NoSuchEntityException;
 import com.transport.api.mapper.PaymentMapper;
 import com.transport.api.mapper.UserMapper;

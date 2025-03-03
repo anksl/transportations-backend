@@ -1,5 +1,8 @@
-package com.transport.api.dto;
+package com.transport.api.dto.user;
 
+import com.transport.api.dto.PaymentDto;
+import com.transport.api.dto.TransportationDto;
+import com.transport.api.dto.user.RoleDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,6 +29,13 @@ public class UserDto {
     private String email;
     private Integer rating;
     private Boolean enabled;
+    @NotBlank
+    private String firstName;
+    @NotBlank
+    private String lastName;
+    @NotBlank
+    private String phoneNumber;
+    private String about;
     private List<TransportationDto> transportations;
     private List<PaymentDto> payments;
     private Set<RoleDto> roles;

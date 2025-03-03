@@ -35,9 +35,20 @@ public class User {
     @Column(unique = true)
     private String name;
 
+    private String email;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
     private String password;
 
-    private String email;
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    private String about;
 
     private short rating;
 

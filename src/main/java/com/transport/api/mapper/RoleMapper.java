@@ -1,6 +1,6 @@
 package com.transport.api.mapper;
 
-import com.transport.api.dto.RoleDto;
+import com.transport.api.dto.user.RoleDto;
 import com.transport.model.Role;
 import com.transport.model.enums.RoleType;
 import org.mapstruct.Mapper;

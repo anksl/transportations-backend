@@ -1,6 +1,6 @@
 package com.transport.service.impl;
 
-import com.transport.api.dto.UserDto;
+import com.transport.api.dto.user.UserDto;
 import com.transport.api.exception.EmailSendingException;
 import com.transport.model.Email;
 import com.transport.service.UserService;

@@ -1,4 +1,4 @@
-package com.transport.api.dto;
+package com.transport.api.dto.user;
 
 import java.util.Set;
 import javax.validation.constraints.Email;
@@ -14,14 +14,17 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistrationUserDto {
+public class UpdateUserDto {
 
     @NotBlank
-    private String name;
+    private String firstName;
     @NotBlank
-    private String password;
+    private String lastName;
     @NotBlank
     @Email(regexp = ".+[@].+[\\.].+")
     private String email;
+    @NotBlank
+    private String phoneNumber;
+    private String about;
     private Set<RoleDto> roles;
 }

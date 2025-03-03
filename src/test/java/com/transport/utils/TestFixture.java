@@ -5,7 +5,7 @@ import com.transport.api.dto.PaymentDto;
 import com.transport.api.dto.SecureUserDto;
 import com.transport.api.dto.SizeDto;
 import com.transport.api.dto.TransportationDto;
-import com.transport.api.dto.UserDto;
+import com.transport.api.dto.user.UserDto;
 import com.transport.model.Address;
 import com.transport.model.Cargo;
 import com.transport.model.Payment;

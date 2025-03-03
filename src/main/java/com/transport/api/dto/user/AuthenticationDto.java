@@ -1,4 +1,4 @@
-package com.transport.api.dto;
+package com.transport.api.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
