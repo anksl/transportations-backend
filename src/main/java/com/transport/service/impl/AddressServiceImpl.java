@@ -10,6 +10,8 @@ import com.transport.repository.AddressRepository;
 import com.transport.repository.CityRepository;
 import com.transport.repository.CountryRepository;
 import com.transport.service.AddressService;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,9 +20,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -74,7 +73,10 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public void createAddress(AddressDto addressDto) {
         Address address = addressMapper.convert(addressDto);
-        checkCityAndCountryForExistence(address);
+        var countryName = address.getCity().getCountry().getName();
+        var cityName = address.getCity().getName();
+        var city = checkCityAndCountryForExistence(countryName, cityName);
+        address.setCity(city);
         addressRepository.save(address);
     }
 
@@ -88,28 +90,25 @@ public class AddressServiceImpl implements AddressService {
         address.setHouse(newAddress.getHouse());
         address.setStreet(newAddress.getStreet());
         address.setPhoneNumber(newAddress.getPhoneNumber());
-        address.setCity(newAddress.getCity());
-        checkCityAndCountryForExistence(address);
+        var countryName = newAddress.getCity().getCountry().getName();
+        var cityName = newAddress.getCity().getName();
+        var city = checkCityAndCountryForExistence(countryName, cityName);
+        address.setCity(city);
         return addressMapper.convert(addressRepository.save(address));
     }
 
-    private void checkCityAndCountryForExistence(Address address) {
-        var countryName = address.getCity().getCountry().getName();
-        var cityName = address.getCity().getName();
-
+    private City checkCityAndCountryForExistence(String countryName, String cityName) {
         var country = countryRepository.findByName(countryName)
             .orElseGet(() -> {
                 var newCountry = Country.builder().name(countryName).build();
                 return countryRepository.save(newCountry);
             });
 
-        var city = cityRepository.findByName(cityName)
+        return cityRepository.findByName(cityName)
             .orElseGet(() -> {
                 var newCity = City.builder().name(cityName).country(country).build();
                 return cityRepository.save(newCity);
             });
-
-        address.setCity(city);
     }
 
     @Transactional
