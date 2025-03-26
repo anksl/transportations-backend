@@ -36,7 +36,7 @@
     </changeSet>
 
     <changeSet id="cargos_data" author="Hanna">
-        <sqlFile path="data/cargos_202502282128.sql" dbms="postgresql"/>
+        <loadData tableName="cargos" file="data/cargos_202308152216.csv"/>
     </changeSet>
 
     <changeSet id="transportations_data" author="Hanna">
@@ -52,11 +52,11 @@
             ALTER SEQUENCE public.addresses_id_seq RESTART WITH 40;
             ALTER SEQUENCE public.cities_id_seq RESTART WITH 11;
             ALTER SEQUENCE public.countries_id_seq RESTART WITH 4;
-            ALTER SEQUENCE public.cargos_id_seq RESTART WITH 16;
+            ALTER SEQUENCE public.cargos_id_seq RESTART WITH 17;
             ALTER SEQUENCE public.deliveries_id_seq RESTART WITH 34;
             ALTER SEQUENCE public.payments_id_seq RESTART WITH 12;
             ALTER SEQUENCE public.roles_id_seq RESTART WITH 4;
-            ALTER SEQUENCE public.sizes_id_seq RESTART WITH 16;
+            ALTER SEQUENCE public.sizes_id_seq RESTART WITH 17;
             ALTER SEQUENCE public.transportations_id_seq RESTART WITH 12;
             ALTER SEQUENCE public.users_id_seq RESTART WITH 24;
         </sql>

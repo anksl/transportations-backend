@@ -22,15 +22,6 @@
             <dropTable tableName="addresses"/>
         </rollback>
     </changeSet>
-    <changeSet author="Anya" id="load_approach">
-        <sql>CREATE TYPE load_approach AS ENUM ('LTL', 'FTL')</sql>
-    </changeSet>
-    <changeSet author="Anya" id="load_method">
-        <sql>CREATE TYPE load_method AS ENUM ('BEHIND', 'SIDE', 'ABOVE')</sql>
-    </changeSet>
-    <changeSet author="Anya" id="package">
-        <sql>CREATE TYPE package AS ENUM ('TAPE', 'BAG', 'BOX', 'PALLET')</sql>
-    </changeSet>
     <changeSet author="Anya" id="load_type">
         <sql>CREATE TYPE load_type AS ENUM ('AUTOMATED', 'MANUAL')</sql>
     </changeSet>
@@ -48,9 +39,9 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="name" type="VARCHAR(255)"/>
-            <column name="type" type="load_approach"/>
-            <column name="loading_method" type="load_method"/>
-            <column name="packaging" type="package"/>
+            <column name="type" type="SMALLINT"/>
+            <column name="loading_method" type="SMALLINT"/>
+            <column name="packaging" type="SMALLINT"/>
         </createTable>
         <rollback>
             <dropTable tableName="cargos"/>

@@ -1,18 +1,11 @@
 package com.transport.model;
 
-import com.transport.model.enums.LoadApproach;
-import com.transport.model.enums.LoadMethod;
-import com.transport.model.enums.Packaging;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import com.transport.model.enums.LoadApproachEntity;
+import com.transport.model.enums.LoadMethodEntity;
+import com.transport.model.enums.PackagingEntity;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +14,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -39,15 +36,12 @@ public class Cargo {
     private String name;
 
     @Column(name = "type")
-    @Enumerated(EnumType.STRING)
-    private LoadApproach loadApproach;
+    private LoadApproachEntity loadApproach;
 
     @Column(name = "loading_method")
-    @Enumerated(EnumType.STRING)
-    private LoadMethod loadMethod;
+    private LoadMethodEntity loadMethod;
 
-    @Enumerated(EnumType.STRING)
-    private Packaging packaging;
+    private PackagingEntity packaging;
 
     @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
     @PrimaryKeyJoinColumn(referencedColumnName = "id")

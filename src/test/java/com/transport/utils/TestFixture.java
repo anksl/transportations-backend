@@ -107,7 +107,7 @@ public class TestFixture {
         return CargoDto.builder()
                 .id(id)
                 .name(CARGO_NAME)
-                .size(getSizeDto(1L))
+                .size(getSizeDto())
                 .build();
     }
 
@@ -125,9 +125,8 @@ public class TestFixture {
                 .build();
     }
 
-    public static SizeDto getSizeDto(Long id) {
+    public static SizeDto getSizeDto() {
         return SizeDto.builder()
-                .id(id)
                 .width(BigDecimal.valueOf(15.00))
                 .build();
     }

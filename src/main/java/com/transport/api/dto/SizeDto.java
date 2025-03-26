@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SizeDto {
-    private Long id;
     @Positive
     private BigDecimal width;
     @Positive

@@ -4,10 +4,11 @@ import com.transport.api.dto.CargoDto;
 import com.transport.api.exception.NoSuchEntityException;
 import com.transport.api.mapper.CargoMapper;
 import com.transport.model.Cargo;
-import com.transport.model.Size;
 import com.transport.repository.CargoRepository;
 import com.transport.repository.SizeRepository;
 import com.transport.service.CargoService;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,9 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -66,22 +64,13 @@ public class CargoServiceImpl implements CargoService {
     @Transactional
     @Override
     public CargoDto updateCargo(Long id, CargoDto newCargoDto) {
-        Cargo cargo = cargoRepository.findById(id)
+        var cargo = cargoRepository.findById(id)
                 .orElseThrow(() -> new NoSuchEntityException(String.format("Cargo with id: %s doesn't exist", id)));
-        Size size = sizeRepository.findById(newCargoDto.getSize().getId())
-                .orElseThrow(() -> new NoSuchEntityException(String.format("Size with id: %s doesn't exist", newCargoDto.getSize().getId())));
-        Cargo newCargo = cargoMapper.convert(newCargoDto);
-        cargo.setName(newCargo.getName());
-        cargo.setLoadApproach(newCargo.getLoadApproach());
-        cargo.setLoadMethod(newCargo.getLoadMethod());
-        cargo.setPackaging(newCargo.getPackaging());
-        size.setDepth(newCargo.getSize().getDepth());
-        size.setHeight(newCargo.getSize().getHeight());
-        size.setWeight(newCargo.getSize().getWeight());
-        size.setWidth(newCargo.getSize().getWidth());
-        cargo.setSize(size);
-        sizeRepository.save(size);
-        return cargoMapper.convert(cargoRepository.save(cargo));
+        sizeRepository.findById(cargo.getSize().getId())
+            .orElseThrow(() -> new NoSuchEntityException(
+                String.format("Size with id: %s doesn't exist", cargo.getSize().getId())));
+        cargoMapper.toCargo(cargo, newCargoDto);
+        return cargoMapper.convert(cargo);
     }
 
     @Transactional
