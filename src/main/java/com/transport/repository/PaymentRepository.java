@@ -15,6 +15,6 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     Page<Payment> findByUser(User user, Pageable pageable);
 
-    @Query("select p.user from Payment p where p.paymentStatus = com.transport.model.enums.PaymentStatus.OWE")
+    @Query("select p.user from Payment p where p.paymentStatus = com.transport.model.enums.PaymentStatusEntity.OWE")
     List<User> findByPaymentStatusOWE();
 }

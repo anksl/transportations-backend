@@ -1,6 +1,7 @@
 package com.transport.model;
 
 import com.transport.model.enums.PaymentStatus;
+import com.transport.model.enums.PaymentStatusEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,8 +42,7 @@ public class Payment {
     private BigDecimal price;
 
     @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private PaymentStatus paymentStatus;
+    private PaymentStatusEntity paymentStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;

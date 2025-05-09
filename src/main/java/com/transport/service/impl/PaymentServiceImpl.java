@@ -9,6 +9,7 @@ import com.transport.model.Email;
 import com.transport.model.Payment;
 import com.transport.model.User;
 import com.transport.model.enums.PaymentStatus;
+import com.transport.model.enums.PaymentStatusEntity;
 import com.transport.repository.PaymentRepository;
 import com.transport.service.PaymentService;
 import com.transport.service.UserService;
@@ -94,11 +95,11 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public void setPaymentStatus(Payment payment) {
         if (payment.getDate() == null) {
-            payment.setPaymentStatus(PaymentStatus.OWE);
+            payment.setPaymentStatus(PaymentStatusEntity.OWE);
         } else if (payment.getDeadline().after(payment.getDate())) {
-            payment.setPaymentStatus(PaymentStatus.ON_TIME);
+            payment.setPaymentStatus(PaymentStatusEntity.ON_TIME);
         } else {
-            payment.setPaymentStatus(PaymentStatus.LATE);
+            payment.setPaymentStatus(PaymentStatusEntity.LATE);
         }
     }
 }

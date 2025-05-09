@@ -91,14 +91,14 @@ public class TransportationServiceImpl implements TransportationService {
         Payment payment = transportation.getPayment();
         paymentService.setPaymentStatus(payment);
         paymentRepository.save(payment);
-        transportationMapper.convert(transportationRepository.save(transportation));
+        transportationRepository.save(transportation);
     }
 
     @Transactional
     @Override
     public TransportationDto updateTransportation(Long id, TransportationDto newTransportationDto) {
         Transportation transportation = transportationRepository.findById(id).orElseThrow(() -> new NoSuchEntityException(String.format("Transportation with id: %s doesn't exist", id)));
-        Payment payment = paymentRepository.findById(newTransportationDto.getPayment().getId()).orElseThrow(() -> new IllegalArgumentException("No payment with id:" + transportation.getPayment().getId()));
+        Payment payment = paymentRepository.findById(transportation.getPayment().getId()).orElseThrow(() -> new IllegalArgumentException("No payment with id:" + transportation.getPayment().getId()));
         Transportation newTransportation = transportationMapper.convert(newTransportationDto);
         Payment newPayment = newTransportation.getPayment();
         payment.setPrice(newPayment.getPrice());

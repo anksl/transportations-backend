@@ -22,12 +22,6 @@
             <dropTable tableName="addresses"/>
         </rollback>
     </changeSet>
-    <changeSet author="Anya" id="load_type">
-        <sql>CREATE TYPE load_type AS ENUM ('AUTOMATED', 'MANUAL')</sql>
-    </changeSet>
-    <changeSet author="Anya" id="payment_status">
-        <sql>CREATE TYPE payment_status AS ENUM ('OWE', 'LATE', 'ON_TIME')</sql>
-    </changeSet>
     <changeSet author="Anya" id="cargos">
         <preConditions onFail="MARK_RAN">
             <not>
@@ -95,9 +89,10 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="date" type="date"/>
-            <column name="type" type="load_type">
+            <column name="type" type="SMALLINT">
                 <constraints nullable="false"/>
             </column>
+            <column name="address_id" type="BIGINT"/>
         </createTable>
         <rollback>
             <dropTable tableName="deliveries"/>
@@ -115,7 +110,7 @@
             </column>
             <column name="date" type="date"/>
             <column name="price" type="DECIMAL(10, 2)"/>
-            <column name="status" type="payment_status"/>
+            <column name="status" type="SMALLINT"/>
             <column name="deadline" type="date"/>
             <column name="user_id" type="BIGINT"/>
         </createTable>
@@ -243,6 +238,11 @@
             <column name="city_id"/>
         </createIndex>
     </changeSet>
+    <changeSet author="Anya" id="deliveries_FK">
+        <createIndex indexName="deliveries_FK" tableName="deliveries">
+            <column name="address_id"/>
+        </createIndex>
+    </changeSet>
     <changeSet author="Anya" id="cargos_name_IDX">
         <createIndex indexName="cargos_name_IDX" tableName="cargos">
             <column name="name"/>
@@ -293,7 +293,7 @@
         <addForeignKeyConstraint baseColumnNames="country_id" baseTableName="cities" constraintName="cities_FK" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="countries" validate="true"/>
     </changeSet>
     <changeSet author="Anya" id="addresses_deliveries_FK">
-        <addForeignKeyConstraint baseColumnNames="id" baseTableName="deliveries" constraintName="deliveries_FK" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="addresses" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="deliveries" constraintName="deliveries_FK" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="addresses" validate="true"/>
     </changeSet>
     <changeSet author="Anya" id="users_payments_FK">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="payments" constraintName="payments_FK" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="users" validate="true"/>

@@ -8,6 +8,9 @@ import com.transport.model.Delivery;
 import com.transport.repository.AddressRepository;
 import com.transport.repository.DeliveryRepository;
 import com.transport.service.DeliveryService;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,10 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -32,8 +31,12 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Override
     public void createDelivery(DeliveryDto deliveryDto) {
         Delivery delivery = deliveryMapper.convert(deliveryDto);
-        addressRepository.save(delivery.getAddress());
-        deliveryMapper.convert(deliveryRepository.save(delivery));
+        var address = addressRepository.findById(delivery.getAddress().getId())
+            .orElseThrow(() -> new NoSuchEntityException(
+                String.format("Address with id: %s doesn't exist",
+                    delivery.getAddress().getId())));
+        delivery.setAddress(address);
+        deliveryRepository.save(delivery);
     }
 
     @Override
@@ -74,14 +77,7 @@ public class DeliveryServiceImpl implements DeliveryService {
         Delivery newDelivery = deliveryMapper.convert(newDeliveryDto);
         delivery.setDate(newDelivery.getDate());
         delivery.setLoadType(newDelivery.getLoadType());
-        Address newAddress = newDelivery.getAddress();
-        address.setApartment(newAddress.getApartment());
-        address.setHouse(newAddress.getHouse());
-        address.setStreet(newAddress.getStreet());
-        address.setPhoneNumber(newAddress.getPhoneNumber());
-        address.setCity(newAddress.getCity());
         delivery.setAddress(address);
-        addressRepository.save(address);
         return deliveryMapper.convert(deliveryRepository.save(delivery));
     }
 
