@@ -1,5 +1,7 @@
 package com.transport.security.config;
 
+import static com.transport.security.utils.SecurityConstants.TRANSPORTER_ENDPOINTS;
+
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,10 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.CorsConfigurationSource;
-
-import static com.transport.security.utils.SecurityConstants.TRANSPORTER_ENDPOINTS;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @EnableWebSecurity
 @Configuration
@@ -50,20 +50,38 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/login", "/home")
             .permitAll()
-            .antMatchers(HttpMethod.GET, "/api/users/find").hasAnyRole("FORWARDER", "CUSTOMER", "ADMIN", "TRANSPORTER")
-            .antMatchers(HttpMethod.PUT, "/api/users/**").hasAnyRole("FORWARDER", "CUSTOMER", "ADMIN", "TRANSPORTER")
-            .antMatchers(HttpMethod.POST, "/api/transportations/**", "/api/addresses/**", "/api/deliveries/**", "/api/payments/**").hasRole("FORWARDER")
-            .antMatchers(HttpMethod.PUT, "/api/transportations/**", "/api/addresses/**", "/api/deliveries/**", "/api/payments/**").hasRole("FORWARDER")
-            .antMatchers(HttpMethod.DELETE, "/api/transportations/**", "/api/addresses/**", "/api/deliveries/**", "/api/payments/**").hasRole("FORWARDER")
-            .antMatchers(HttpMethod.POST, "/api/cargos/**").hasRole("CUSTOMER")
-            .antMatchers(HttpMethod.PUT, "/api/cargos/**").hasRole("CUSTOMER")
-            .antMatchers(HttpMethod.DELETE, "/api/cargos/**").hasRole("CUSTOMER")
-            .antMatchers(HttpMethod.GET, "/api/cargos/**", "/api/payments/current").hasRole("CUSTOMER")
-            .antMatchers(HttpMethod.GET, TRANSPORTER_ENDPOINTS).hasRole("TRANSPORTER")
-            .antMatchers(HttpMethod.POST, "/api/emails/sendReport").hasRole("TRANSPORTER")
-            .antMatchers("/api/users/**", "/api/emails/sendCustomerReminder").hasRole("ADMIN")
-            .antMatchers(HttpMethod.GET, "/api/**").hasRole("FORWARDER")
-            .antMatchers(HttpMethod.POST, "/api/emails/send", "/api/emails/sendWithAttachment").hasAnyRole("FORWARDER", "CUSTOMER", "ADMIN", "TRANSPORTER");
+            .antMatchers(HttpMethod.GET, "/api/transportations/**", "/api/users/**",
+                "/api/users/find", "/api/deliveries/**", "/api/cargos/**")
+            .hasAnyRole("FORWARDER", "CUSTOMER", "TRANSPORTER", "ADMIN")
+            .antMatchers(HttpMethod.PUT, "/api/users/**")
+            .hasAnyRole("FORWARDER", "CUSTOMER", "TRANSPORTER", "ADMIN")
+            .antMatchers(HttpMethod.POST, "/api/transportations/**", "/api/addresses/**",
+                "/api/deliveries/**", "/api/payments/**")
+            .hasAnyRole("FORWARDER", "ADMIN")
+            .antMatchers(HttpMethod.PUT, "/api/transportations/**", "/api/addresses/**",
+                "/api/deliveries/**", "/api/payments/**")
+            .hasAnyRole("FORWARDER", "ADMIN")
+            .antMatchers(HttpMethod.DELETE, "/api/transportations/**", "/api/addresses/**",
+                "/api/deliveries/**", "/api/payments/**")
+            .hasAnyRole("FORWARDER", "ADMIN")
+            .antMatchers(HttpMethod.POST, "/api/cargos/**")
+            .hasAnyRole("CUSTOMER", "ADMIN")
+            .antMatchers(HttpMethod.PUT, "/api/cargos/**")
+            .hasAnyRole("CUSTOMER", "ADMIN")
+            .antMatchers(HttpMethod.DELETE, "/api/cargos/**")
+            .hasAnyRole("CUSTOMER", "ADMIN")
+            .antMatchers(HttpMethod.GET, "/api/payments/current")
+            .hasAnyRole("CUSTOMER", "ADMIN")
+            .antMatchers(HttpMethod.GET, TRANSPORTER_ENDPOINTS)
+            .hasAnyRole("TRANSPORTER", "ADMIN")
+            .antMatchers(HttpMethod.POST, "/api/emails/sendReport")
+            .hasAnyRole("TRANSPORTER", "ADMIN")
+            .antMatchers(HttpMethod.POST, "/api/emails/sendCustomerReminder")
+            .hasRole("ADMIN")
+            .antMatchers(HttpMethod.GET, "/api/**")
+            .hasAnyRole("FORWARDER", "ADMIN")
+            .antMatchers(HttpMethod.POST, "/api/emails/send", "/api/emails/sendWithAttachment")
+            .hasAnyRole("FORWARDER", "CUSTOMER", "TRANSPORTER", "ADMIN");
 
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
