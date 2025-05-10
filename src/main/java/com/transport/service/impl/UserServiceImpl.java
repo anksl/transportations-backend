@@ -27,6 +27,11 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    public List<UserDto> findAll() {
+        return userMapper.convert(userRepository.findAll());
+    }
+
+    @Override
     public UserDto findById(Long id) {
         return userMapper.convert(userRepository.findById(id)
             .orElseThrow(() -> new NoSuchEntityException(

@@ -4,6 +4,7 @@ import com.transport.api.dto.user.RegistrationUserDto;
 import com.transport.api.dto.user.UpdateUserDto;
 import com.transport.api.dto.user.UserDto;
 import com.transport.model.User;
+import java.util.List;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,6 +15,8 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface UserMapper {
     @Mapping(target = "payments", ignore = true)
     User convert(UserDto userDto);
+
+    List<UserDto> convert(List<User> user);
 
     @BeanMapping(ignoreByDefault = true, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "firstName", source = "firstName")

@@ -4,6 +4,7 @@ import com.transport.api.dto.user.RegistrationUserDto;
 import com.transport.api.dto.user.UpdateUserDto;
 import com.transport.api.dto.user.UserDto;
 import com.transport.service.UserService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -27,6 +28,11 @@ public class UserController {
     @PostMapping("/register")
     public void signUp(@Validated @RequestBody RegistrationUserDto user) {
         userService.createUser(user);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserDto>> findAll() {
+        return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping("/{id}")

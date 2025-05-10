@@ -3,8 +3,11 @@ package com.transport.service;
 import com.transport.api.dto.user.RegistrationUserDto;
 import com.transport.api.dto.user.UpdateUserDto;
 import com.transport.api.dto.user.UserDto;
+import java.util.List;
 
 public interface UserService {
+
+    List<UserDto> findAll();
 
     UserDto findById(Long id);
 
